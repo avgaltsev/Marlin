@@ -237,7 +237,7 @@
  * Multiple extruders can be assigned to the same pin in which case
  * the fan will turn on when any selected extruder is above the threshold.
  */
-#define E0_AUTO_FAN_PIN -1
+#define E0_AUTO_FAN_PIN FAN1_PIN
 #define E1_AUTO_FAN_PIN -1
 #define E2_AUTO_FAN_PIN -1
 #define E3_AUTO_FAN_PIN -1
@@ -1100,7 +1100,7 @@
 #if HAS_TRINAMIC
 
   #define R_SENSE           0.11  // R_sense resistor for SilentStepStick2130
-  #define HOLD_MULTIPLIER    0.5  // Scales down the holding current from run current
+  #define HOLD_MULTIPLIER    1.0  // Scales down the holding current from run current
   #define INTERPOLATE       true  // Interpolate X/Y/Z_MICROSTEPS to 256
 
   #define X_CURRENT          800  // rms current in mA. Multiply by 1.41 for peak current.
@@ -1150,7 +1150,7 @@
    * Use Trinamic's ultra quiet stepping mode.
    * When disabled, Marlin will use spreadCycle stepping mode.
    */
-  #define STEALTHCHOP
+  //#define STEALTHCHOP
 
   /**
    * Monitor Trinamic TMC2130 and TMC2208 drivers for error conditions,
@@ -1183,8 +1183,8 @@
   #define X2_HYBRID_THRESHOLD    100
   #define Y_HYBRID_THRESHOLD     100
   #define Y2_HYBRID_THRESHOLD    100
-  #define Z_HYBRID_THRESHOLD       3
-  #define Z2_HYBRID_THRESHOLD      3
+  #define Z_HYBRID_THRESHOLD     100
+  #define Z2_HYBRID_THRESHOLD    100
   #define E0_HYBRID_THRESHOLD     30
   #define E1_HYBRID_THRESHOLD     30
   #define E2_HYBRID_THRESHOLD     30

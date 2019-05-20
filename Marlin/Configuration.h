@@ -131,7 +131,7 @@
 // The following define selects which electronics board you have.
 // Please choose the name from boards.h that matches your setup
 #ifndef MOTHERBOARD
-  #define MOTHERBOARD BOARD_TRIGORILLA_14
+  #define MOTHERBOARD BOARD_MKS_GEN_13
 #endif
 
 // Optional custom name for your RepStrap or other custom machine
@@ -549,10 +549,10 @@
   #endif
 
   // Print surface diameter/2 minus unreachable space (avoid collisions with vertical towers).
-  #define DELTA_PRINTABLE_RADIUS 116.0 // mm
+  #define DELTA_PRINTABLE_RADIUS 110.0 // mm
 
   // Center-to-center distance of the holes in the diagonal push rods.
-  #define DELTA_DIAGONAL_ROD 271.5 // mm
+  #define DELTA_DIAGONAL_ROD 267.0 // mm
 
   // height from z=0 to home position
   #define DELTA_HEIGHT 320.00 // get this value from auto calibrate
@@ -691,7 +691,7 @@
 
 // delta speeds must be the same on xyz
 #define DEFAULT_XYZ_STEPS_PER_UNIT ((XYZ_FULL_STEPS_PER_ROTATION) * (XYZ_MICROSTEPS) / double(XYZ_BELT_PITCH) / double(XYZ_PULLEY_TEETH))
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, 96 }  // default steps per unit for Kossel (GT2, 20 tooth)
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, DEFAULT_XYZ_STEPS_PER_UNIT, 391 }  // default steps per unit for Kossel (GT2, 20 tooth)
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -706,7 +706,7 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 3000, 3000 }
+#define DEFAULT_MAX_ACCELERATION      { 1000, 1000, 1000, 1000 }
 
 /**
  * Default Acceleration (change/s) change = mm/s
@@ -716,9 +716,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  1000    // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   1000    // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk (mm/s)
@@ -861,16 +861,16 @@
  */
 #define X_PROBE_OFFSET_FROM_EXTRUDER 0     // X offset: -left  +right  [of the nozzle]
 #define Y_PROBE_OFFSET_FROM_EXTRUDER 0     // Y offset: -front +behind [the nozzle]
-#define Z_PROBE_OFFSET_FROM_EXTRUDER -16.8 // Z offset: -below +above  [the nozzle]
+#define Z_PROBE_OFFSET_FROM_EXTRUDER -15.7 // Z offset: -below +above  [the nozzle]
 
 // Certain types of probes need to stay away from edges
 #define MIN_PROBE_EDGE 20
 
 // X and Y axis travel speed (mm/m) between probes
-#define XY_PROBE_SPEED 6000
+#define XY_PROBE_SPEED (50*60)
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
+#define Z_PROBE_SPEED_FAST XY_PROBE_SPEED
 
 // Feedrate (mm/m) for the "accurate" probe of each point
 #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 3)
@@ -978,14 +978,14 @@
 // @section machine
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR false
-#define INVERT_Y_DIR false
-#define INVERT_Z_DIR false
+#define INVERT_X_DIR true
+#define INVERT_Y_DIR true
+#define INVERT_Z_DIR true
 
 // @section extruder
 
 // For direct drive extruder v9 set to true, for geared extruder set to false.
-#define INVERT_E0_DIR false
+#define INVERT_E0_DIR true
 #define INVERT_E1_DIR false
 #define INVERT_E2_DIR false
 #define INVERT_E3_DIR false
@@ -1218,12 +1218,12 @@
  * Override if the automatically selected points are inadequate.
  */
 #if ENABLED(AUTO_BED_LEVELING_3POINT) || ENABLED(AUTO_BED_LEVELING_UBL)
-  #define PROBE_PT_1_X -40
-  #define PROBE_PT_1_Y 60
-  #define PROBE_PT_2_X 40
-  #define PROBE_PT_2_Y 60
+  #define PROBE_PT_1_X 40
+  #define PROBE_PT_1_Y 30
+  #define PROBE_PT_2_X -40
+  #define PROBE_PT_2_Y 30
   #define PROBE_PT_3_X 0
-  #define PROBE_PT_3_Y -70
+  #define PROBE_PT_3_Y -50
 #endif
 
 /**
@@ -1282,7 +1282,7 @@
 // Homing speeds (mm/m)
 // Delta only homes to Z
 //#define HOMING_FEEDRATE_XY (50*60)
-#define HOMING_FEEDRATE_Z  (200*60)
+#define HOMING_FEEDRATE_Z  (50*60)
 
 // @section calibrate
 
@@ -1355,7 +1355,7 @@
 // M501 - reads parameters from EEPROM (if you need reset them after you changed them temporarily).
 // M502 - reverts to the default "factory settings".  You still need to store them in EEPROM afterwards if you want to.
 //
-//#define EEPROM_SETTINGS // Enable for M500 and M501 commands
+#define EEPROM_SETTINGS // Enable for M500 and M501 commands
 //#define DISABLE_M503    // Saves ~2700 bytes of PROGMEM. Disable for release!
 #define EEPROM_CHITCHAT   // Give feedback on EEPROM commands. Disable to save PROGMEM.
 
@@ -1387,12 +1387,12 @@
 // @section temperature
 
 // Preheat Constants
-#define PREHEAT_1_TEMP_HOTEND 180
-#define PREHEAT_1_TEMP_BED     70
+#define PREHEAT_1_TEMP_HOTEND 190
+#define PREHEAT_1_TEMP_BED     60
 #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
-#define PREHEAT_2_TEMP_HOTEND 240
-#define PREHEAT_2_TEMP_BED    110
+#define PREHEAT_2_TEMP_HOTEND 230
+#define PREHEAT_2_TEMP_BED    100
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
 
 /**
@@ -1623,7 +1623,7 @@
 //  If CLOCKWISE normally moves DOWN this makes it go UP.
 //  If CLOCKWISE normally moves UP this makes it go DOWN.
 //
-//#define REVERSE_MENU_DIRECTION
+#define REVERSE_MENU_DIRECTION
 
 //
 // Individual Axis Homing
